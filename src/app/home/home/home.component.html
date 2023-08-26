@@ -1,0 +1,29 @@
+<div class="align-center">
+  <h4 class="devo">Devo comprar esse</h4>
+  <h1 class="pc">PC?</h1>
+  <p>(Não seja enganado pelo vendedor das casas Bahia)</p>
+</div>
+<div class="card">
+  <mat-card class="example-card">
+    <mat-card-title>Marca do pc:</mat-card-title>
+    <mat-form-field class="width-90">
+      <mat-select [(ngModel)]="selectedValue" name="selectedNotebookBrand">
+        <mat-option *ngFor="let pc of notebookBrand" [value]="pc.value">
+          {{ pc.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-card-actions class="aling-end">
+      <button class="button-size" mat-raised-button (click)="verificarSelecao()">Bora ver!</button>
+    </mat-card-actions>
+  </mat-card>
+  
+</div>
+<div class="align-center">
+    <p>
+        Instagram: <a target="_blank" class="color-link" href="https://www.instagram.com/_matheus_honorato/">@_matheus_honorato</a>
+    </p>
+    <p>
+        Criado por: <a target="_blank" class="color-link" href="https://www.linkedin.com/in/matheus-honorato-de-sousa-5697a6233/">Matheus Honorato</a>
+    </p>
+</div>

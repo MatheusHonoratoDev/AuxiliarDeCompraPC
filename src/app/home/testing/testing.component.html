@@ -1,0 +1,54 @@
+<div class="align-center">
+  <h4 class="devo">Devo comprar esse</h4>
+  <h1 class="pc capitalizar">{{ marca }}</h1>
+</div>
+<div class="card">
+  <mat-card class="example-card">
+    <mat-card-title>{{ inicialAsk }}</mat-card-title>
+
+    <mat-form-field *ngIf="ask">
+      <mat-select [(ngModel)]="selectedValue" name="selectedNotebookBrand">
+        <mat-option *ngFor="let pc of processadores" [value]="pc">
+          {{ pc }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-card-actions class="aling-end">
+      <button
+        class="button-size button-green"
+        mat-raised-button
+        (click)="processarResposta(true)"
+      >
+        {{ textButton }}
+      </button>
+      <button
+        *ngIf="next"
+        class="button-size button-red"
+        mat-raised-button
+        (click)="processarResposta(false)"
+      >
+        Não
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<div class="align-center">
+  <p>
+    Instagram:
+    <a
+      target="_blank"
+      class="color-link"
+      href="https://www.instagram.com/_matheus_honorato/"
+      >@_matheus_honorato</a
+    >
+  </p>
+  <p>
+    Criado por:
+    <a
+      target="_blank"
+      class="color-link"
+      href="https://www.linkedin.com/in/matheus-honorato-de-sousa-5697a6233/"
+      >Matheus Honorato</a
+    >
+  </p>
+</div>
