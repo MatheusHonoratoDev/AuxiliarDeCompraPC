@@ -9,12 +9,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TestingComponent {
   marca: string | null = null;
   inicialAsk: string | null = null;
-  ask: boolean = false;
   selectedValue: string | null = null;
   next: boolean = true;
   textButton: string = 'Sim';
+  jueio = false;
+  resposta: boolean | undefined;
 
-  processadores = [
+  processadoresDomesticos = [
     'Atom',
     'Celeron',
     'Pentium',
@@ -26,6 +27,8 @@ export class TestingComponent {
     'QuadCore',
   ];
 
+  processadoresGamers: Array<string> = [];
+
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
@@ -33,57 +36,79 @@ export class TestingComponent {
       this.selectedValue = params.get('selectedValue');
       this.marca = this.selectedValue;
 
-      if (
-        this.marca?.trim() === 'Positivo' ||
-        this.marca?.trim() === 'Multilaser'
-      ) {
-        this.inicialAsk = `O ${this.marca} custa menos de R$200,00?`;
-      } else {
-        this.inicialAsk = `Seu pc ${this.marca} será para uso doméstico?`;
+      switch (this.marca?.trim()) {
+        case 'Positivo':
+        case 'Multilaser':
+          this.inicialAsk = `O ${this.marca} custa menos de R$200,00?`;
+          break;
+        default:
+          this.inicialAsk = `Seu PC ${this.marca} será para uso doméstico?`;
       }
     });
   }
 
+  sendValue( valor: boolean){
+    this.resposta = valor;
+  }
+
   processarResposta(ask: boolean) {
     this.responseBack();
-    if (
-      this.marca?.trim() === 'Positivo' ||
-      this.marca?.trim() === 'Multilaser'
-    ) {
-      if (
-        ask === true &&
-        (this.marca?.trim() === 'Positivo' ||
-          this.marca?.trim() === 'Multilaser')
-      ) {
-        this.inicialAsk =
-          'Se for usado e tiver menos de 3 anos talvez valha a pena! 😎';
-        this.next = false;
-        this.textButton = 'Inicio';
-      } else {
-        this.inicialAsk = `COMPRA ${this.marca} NÃO! é bomba 💣`;
-        this.next = false;
-        this.textButton = 'Inicio';
-      }
-    } else {
-      if (
-        (ask && this.marca?.trim() !== 'Positivo') ||
-        this.marca?.trim() !== 'Multilaser'
-      ) {
-        this.next = false;
-        this.textButton = 'Próximo';
-        this.ask = true;
-        this.inicialAsk = 'Selecione o processador';
-        if (this.selectedValue === 'Celeron') {
+
+    switch (this.marca?.trim()) {
+      case 'Positivo':
+      case 'Multilaser':
+        if (ask) {
+          this.inicialAsk = `Se não for usado, talvez valha a pena! 😎`;
+        } else {
+          this.inicialAsk = `COMPRA ${this.marca} NÃO! É bomba 💣`;
         }
-      } else {
-        console.log('Resposta falsa');
-      }
+        this.next = false;
+        this.textButton = 'Início';
+        break;
+      default:
+        if (ask) {
+          this.next = false;
+          this.textButton = 'Próximo';
+          this.jueio = true;
+          this.inicialAsk = 'Selecione o processador';
+          if (this.selectedValue === 'Celeron') {
+            this.inicialAsk =
+              'Se você comprar, talvez seja melhor você procurar um psiquiatra, vai precisar 🤪';
+            this.next = false;
+            this.textButton = 'Início';
+            this.jueio = false;
+          }
+        } else {
+          this.inicialAsk = 'Será para jogos? 🎮';
+          this.banana(ask);
+        }
+        break;
+    }
+  }
+
+  banana(churros: boolean) {
+    console.log(churros)
+    if (churros) {
+      this.processadoresGamers = [
+        'Notebook Gamer Lenovo IdeaPad 3i',
+        'Notebook Gamer Acer Predator Helios 300',
+        'Notebook Gamer Dell G15',
+        'Notebook Gamer ASUS TUF',
+      ];
+      this.inicialAsk =
+        'Uma loja geladeira não é o melhor lugar para comprar um PC gamer. Aqui estão algumas opções de linhas gamers que podem te ajudar 🖥️:';
+      this.next = false;
+      this.textButton = 'Início';
+    } else {
+      console.log('juliete');
     }
   }
 
   responseBack() {
-    if (this.textButton.trim() === 'Inicio') {
-      this.router.navigateByUrl('');
+    switch (this.textButton.trim()) {
+      case 'Início':
+        this.router.navigateByUrl('');
+      break;
     }
   }
 }

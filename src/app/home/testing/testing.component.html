@@ -5,10 +5,16 @@
 <div class="card">
   <mat-card class="example-card">
     <mat-card-title>{{ inicialAsk }}</mat-card-title>
+    <mat-list *ngFor="let processadores of processadoresGamers">
+      <mat-list-item> 💻 {{ processadores }}</mat-list-item>
+    </mat-list>
 
-    <mat-form-field *ngIf="ask">
+    <mat-form-field *ngIf="jueio">
       <mat-select [(ngModel)]="selectedValue" name="selectedNotebookBrand">
-        <mat-option *ngFor="let pc of processadores" [value]="pc">
+        <mat-option
+          *ngFor="let pc of processadoresDomesticos"
+          [value]="pc"
+        >
           {{ pc }}
         </mat-option>
       </mat-select>
@@ -17,7 +23,7 @@
       <button
         class="button-size button-green"
         mat-raised-button
-        (click)="processarResposta(true)"
+        (click)="sendValue(true)"
       >
         {{ textButton }}
       </button>
@@ -25,7 +31,7 @@
         *ngIf="next"
         class="button-size button-red"
         mat-raised-button
-        (click)="processarResposta(false)"
+        (click)="sendValue(false)"
       >
         Não
       </button>
